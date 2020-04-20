@@ -99,11 +99,11 @@ class Profile(commands.Cog):
         await avatar_asset.save(f'{target.id}_avatar.jpg')
         os.chdir(cur_dir)
         avatar = f'{target.id}_avatar.jpg'
-        loop = asyncio.get_event_loop()
-        await loop.run_in_executor(None, image.create_profile, avatar,
-                                   name, rank.name, str(rep), str(credit), bio, image_name)
-        image_file = discord.File(f'{settings.BOT_DIR}/cogs/assets/profile/image_cache/{image_name}')
-        await ctx.send(file=image_file)
+        async with ctx.channel.typing():
+            await self.client.loop.run_in_executor(None, image.create_profile, avatar,
+                                                   name, rank.name, str(rep), str(credit), bio, image_name)
+            image_file = discord.File(f'{settings.BOT_DIR}/cogs/assets/profile/image_cache/{image_name}')
+            await ctx.send(file=image_file)
 
     @commands.command()
     @commands.max_concurrency(1, commands.BucketType.user)
