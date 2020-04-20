@@ -95,11 +95,11 @@ class Profile(commands.Cog):
         rank = ctx.guild.get_role(roles.RANK_ORDER[rank_no])
         cur_dir = os.getcwd()
         os.chdir(f'{settings.BOT_DIR}/cogs/assets/profile/image_cache')
-        avatar_asset = target.avatar_url_as(format='png')
-        await avatar_asset.save(f'{target.id}_avatar.jpg')
-        os.chdir(cur_dir)
-        avatar = f'{target.id}_avatar.jpg'
         async with ctx.channel.typing():
+            avatar_asset = target.avatar_url_as(format='png')
+            await avatar_asset.save(f'{target.id}_avatar.jpg')
+            os.chdir(cur_dir)
+            avatar = f'{target.id}_avatar.jpg'
             await self.client.loop.run_in_executor(None, image.create_profile, avatar,
                                                    name, rank.name, str(rep), str(credit), bio, image_name)
             image_file = discord.File(f'{settings.BOT_DIR}/cogs/assets/profile/image_cache/{image_name}')
