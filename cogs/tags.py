@@ -90,7 +90,7 @@ class Tag(commands.Cog):
             tag_name_msg = await self.client.wait_for('message', check=check, timeout=60)
             tag_name = tag_name_msg.content
             if not await tag_or_alias_exist(tag_name):
-                ctx.send(f'{ctx.author.mention} {tag_name} does not exist!')
+                await ctx.send(f'{ctx.author.mention} {tag_name} does not exist!')
                 return
 
             await ctx.send(f'{ctx.author.mention} Enter the alias (type ``cancel`` to abort)')
