@@ -25,6 +25,11 @@ class Fun(commands.Cog):
         await ctx.send(f'{ctx.author.mention} Now Playing - {song}')
 
     @commands.command()
+    async def reverse(self, ctx, *, msg):
+        reverse = msg[::-1]
+        await ctx.send(reverse)
+
+    @commands.command()
     @commands.cooldown(rate=1, per=0.3, type=commands.BucketType.user)
     async def explosion(self, ctx):
         explosion_gifs = [
