@@ -62,8 +62,7 @@ async def register_member(member: discord.Member, rbx_name: str):
 async def unregister_member(member: discord.Member):
     user_id = member.id
     query1 = f'DELETE FROM members WHERE id={user_id}'
-    query2 = f'DELETE FROM reps WHERE repped={user_id}'
-    r = await update(query1, query2)
+    r = await update(query1)
     return r
 
 
