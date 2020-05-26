@@ -262,6 +262,56 @@ class Profile(commands.Cog):
             await ctx.send(message)
             return
 
+    @commands.command()
+    @commands.max_concurrency(1, commands.BucketType.user)
+    async def negrep(self, ctx, member: discord.Member = None, *, reason=None):
+        def check(msg):
+            return ctx.author == msg.author and ctx.channel == msg.channel
+
+        target = member
+
+        if member is None:
+            await ctx.send(f'{ctx.author.mention} Who do you want to negative rep?')
+            try:
+                reply = await self.client.wait_for('message', check=check, timeout=30)
+                target = reply.mentions[0]
+            except asyncio.TimeoutError:
+                await ctx.send(f'{ctx.author.mention} You took too long to reply. Process Cancelled')
+                return
+            except IndexError:
+                await ctx.send(f'You need to mention the member. Process cancelled.')
+                return
+        if target == ctx.author:
+            await ctx.send(f'{ctx.author.mention} BREH!! You why would you negative rep yourself!!')
+            return
+        if not await db.is_registered(target):
+            await ctx.send(f'{ctx.author.mention} {target.display_name} is not registered with the guild.')
+            return
+        final_reason = reason
+        if reason is None:
+            await ctx.send(f'{ctx.author.mention} Enter the reason for negative repping {target.display_name}')
+            try:
+                reply = await self.client.wait_for('message', check=check, timeout=30)
+                final_reason = reply.content
+            except asyncio.TimeoutError:
+                await ctx.send(f'{ctx.author.mention} You took too long to reply. Process Cancelled')
+                return
+        final_reason = final_reason.replace('"', '\\"')
+
+        repper = ctx.author
+        repped = target
+        date_of_rep = datetime.datetime.now().date().strftime('%Y/%m/%d')
+
+        can_rep, message = await self.can_rep(repper, repped, date_of_rep)
+        if can_rep:
+            rep_query = f'INSERT INTO reps(repper, repped, reason, dor) ' \
+                        f'VALUES({repper.id}, {repped.id}, "{final_reason}", "{date_of_rep}")'
+            await db.update(rep_query)
+            await ctx.send(f'{ctx.author.mention} just repped {target.display_name}!!\n**reason:** {final_reason}')
+        else:
+            await ctx.send(message)
+            return
+
     @commands.command(aliases=['requestpromote', 'rankrequest', 'requestrank'])
     async def promoterequest(self, ctx):
         if ctx.channel.id != settings.RANK_REQUEST_CHANNEL:

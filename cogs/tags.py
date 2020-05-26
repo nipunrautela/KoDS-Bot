@@ -220,7 +220,7 @@ class Tag(commands.Cog):
             color=discord.colour.Colour.from_rgb(100, 200, 0),
         )
         embed.add_field(name='Tag Name', value=f'{data[0]}')
-        embed.add_field(name='Tag Content', value=f'{data[1][0:1023]}', inline=False)
+        embed.add_field(name='Tag Content', value=f'```{data[1][0:1023]}```', inline=False)
         embed.add_field(name='Aliases', value=f'{aliases}', inline=False)
         embed.add_field(name='Created by', value=f'{ctx.guild.get_member(data[2]).mention}', inline=False)
         embed.add_field(name='Registered Date', value=f'{data[3]}', inline=False)
