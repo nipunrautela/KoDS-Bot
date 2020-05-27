@@ -85,7 +85,7 @@ class Profile(commands.Cog):
         query = f'SELECT rbx_name, plr_rank, credit, bio FROM members WHERE id={target.id}'
         result = await db.retrieve(query)
         name, rank_no, credit, bio = result
-        rep_query = f'SELECT COUNT(*) FROM reps WHERE repped={target.id}'
+        rep_query = f'SELECT SUM(amount) FROM reps WHERE repped={target.id}'
         rep = (await db.retrieve(rep_query))[0]
         image_name = 'image' + str(self.name_count) + '.png'
         if self.name_count > 8:
@@ -304,10 +304,11 @@ class Profile(commands.Cog):
 
         can_rep, message = await self.can_rep(repper, repped, date_of_rep)
         if can_rep:
-            rep_query = f'INSERT INTO reps(repper, repped, reason, dor) ' \
-                        f'VALUES({repper.id}, {repped.id}, "{final_reason}", "{date_of_rep}")'
+            rep_query = f'INSERT INTO reps(repper, repped, reason, dor, amount) ' \
+                        f'VALUES({repper.id}, {repped.id}, "{final_reason}", "{date_of_rep}", -1)'
             await db.update(rep_query)
-            await ctx.send(f'{ctx.author.mention} just repped {target.display_name}!!\n**reason:** {final_reason}')
+            await ctx.send(f'{ctx.author.mention} just negative repped {target.display_name}!!\n'
+                           f'**reason:** {final_reason}')
         else:
             await ctx.send(message)
             return

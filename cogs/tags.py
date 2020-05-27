@@ -68,7 +68,7 @@ class Tag(commands.Cog):
             if tag_content.lower() == 'cancel':
                 await ctx.send(f'{ctx.author.mention} {tag_name} was not added!')
                 return
-            tag_content = str(tag_content).replace('"', '\\"')
+            tag_content = str(tag_content).replace('"', '\\"').replace('\\', '\\\\')
         except asyncio.TimeoutError:
             await ctx.send(f'{ctx.author.mention} You took too long to reply. Tag creation cancelled!')
             return
@@ -99,7 +99,7 @@ class Tag(commands.Cog):
             if tag_alias.lower() == 'cancel':
                 await ctx.send(f'{ctx.author.mention} Cancelled!! An alias for ``{tag_name}`` was not created!')
                 return
-            tag_alias = str(tag_alias).replace('"', '\\"')
+            tag_alias = str(tag_alias).replace('"', '\\"').replace('\\', '\\\\')
 
             query = f'INSERT INTO tag_alias(name, alias) VALUES("{tag_name}", "{tag_alias}")'
             await db.update(query)
@@ -195,7 +195,7 @@ class Tag(commands.Cog):
             if tag_content.lower() == 'cancel':
                 await ctx.send(f'{ctx.author.mention} {tag_name} was not updated!')
                 return
-            tag_content = str(tag_content).replace('"', '\\"')
+            tag_content = str(tag_content).replace('"', '\\"').replace('\\', '\\\\')
         except asyncio.TimeoutError:
             await ctx.send(f'You took too long to reply. Tag creation cancelled!')
             return
