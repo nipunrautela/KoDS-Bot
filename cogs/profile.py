@@ -254,8 +254,8 @@ class Profile(commands.Cog):
 
         can_rep, message = await self.can_rep(repper, repped, date_of_rep)
         if can_rep:
-            rep_query = f'INSERT INTO reps(repper, repped, reason, dor) ' \
-                        f'VALUES({repper.id}, {repped.id}, "{final_reason}", "{date_of_rep}")'
+            rep_query = f'INSERT INTO reps(repper, repped, reason, dor, amount) ' \
+                        f'VALUES({repper.id}, {repped.id}, "{final_reason}", "{date_of_rep}", 1)'
             await db.update(rep_query)
             await ctx.send(f'{ctx.author.mention} just repped {target.display_name}!!\n**reason:** {final_reason}')
         else:

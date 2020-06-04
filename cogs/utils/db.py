@@ -9,7 +9,7 @@ import typing
 async def update(*query):
     loop = asyncio.get_event_loop()
 
-    conn = await aiomysql.connect(host='localhost', port=3306,
+    conn = await aiomysql.connect(host='localhost', port=3308,
                                   user='root', password='nipun1209',
                                   db='kods', loop=loop)
 
@@ -23,7 +23,7 @@ async def update(*query):
 
 async def retrieve(query: str, size: int = 1):
     loop = asyncio.get_event_loop()
-    conn = await aiomysql.connect(host='localhost', port=3306,
+    conn = await aiomysql.connect(host='localhost', port=3308,
                                   user='root', password='nipun1209',
                                   db='kods', loop=loop)
 
@@ -41,7 +41,7 @@ async def retrieve(query: str, size: int = 1):
 
 async def row_count(query: str):
     loop = asyncio.get_event_loop()
-    conn = await aiomysql.connect(host='localhost', port=3306,
+    conn = await aiomysql.connect(host='localhost', port=3308,
                                   user='root', password='nipun1209',
                                   db='kods', loop=loop)
 
