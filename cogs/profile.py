@@ -313,6 +313,43 @@ class Profile(commands.Cog):
             await ctx.send(message)
             return
 
+    @commands.command(aliases=['swzp'])
+    async def setworldzeroprofile(self, ctx):
+        image_dir = f'{settings.BOT_DIR}/cogs/assets/profile/wz_profile_images'
+        async with ctx.channel.typing():
+            try:
+                wz_screenshot = ctx.message.attachments[0]
+                await wz_screenshot.save(f'{image_dir}/{ctx.author.id}_wz_profile.png')
+                await ctx.send(f'{ctx.author.id} Successfully updated your world zero image in the database!')
+            except IndexError:
+                await ctx.send(f'{ctx.author.mention} Please upload the world zero screenshot')
+                try:
+                    reply = await self.client.wait_for('message', check=lambda m: m.author == ctx.author, timeout=60)
+                    if (wz_screenshot := reply.attachments[0]) is not None:
+                        await wz_screenshot.save(f'{image_dir}/{ctx.author.id}_wz_profile.png')
+                    await ctx.send(f'{ctx.author.mention} Successfully updated your world zero image in the database!')
+                except asyncio.TimeoutError:
+                    await ctx.send(f'{ctx.author.mention} You took too long to reply! Command cancelled!')
+                    return
+                except IndexError:
+                    await ctx.send(f'{ctx.author.mention} Command Failed. You did not upload an image.')
+
+    @commands.command(aliases=['gwzp'])
+    async def getworldzeroprofile(self, ctx, member: discord.Member = None):
+        image_dir = f'{settings.BOT_DIR}/cogs/assets/profile/wz_profile_images'
+        async with ctx.channel.typing():
+            try:
+                if member is None:
+                    image_file = discord.File(f'{image_dir}/{ctx.author.id}_wz_profile.png')
+                    await ctx.send(file=image_file)
+                else:
+                    image_file = discord.File(f'{image_dir}/{member.id}_wz_profile.png')
+                    await ctx.send(file=image_file)
+            except FileNotFoundError:
+                await ctx.send(f'{ctx.author.mention} Not Found! Upload your world zero screenshot '
+                               f'using ``k.setworldzeroprofile``')
+                return
+
     @commands.command(aliases=['requestpromote', 'rankrequest', 'requestrank'])
     async def promoterequest(self, ctx):
         if ctx.channel.id != settings.RANK_REQUEST_CHANNEL:
