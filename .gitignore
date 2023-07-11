@@ -7,6 +7,7 @@
 pyvenv.cfg
 start.bat
 settings.py
-/cogs/assets/profile/wz_profile_images
+/cogs/assets
 /cogs/data
 /cogs/cog archives
+/settings.py
