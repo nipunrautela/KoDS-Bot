@@ -35,10 +35,10 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def date(self, ctx):
-        if ctx.author.id == 310610159187525634:
-            await ctx.send(f"{ctx.author.mention} Who said you could ask me out. I don't date ugly people like you!! GO AWAY!!")
-        else:
-            await ctx.send(f"{ctx.author.mention} Sure! I'd love to go out with you. I am free tomorrow from 11am to 6pm.")
+    	if ctx.author.id == 310610159187525634:
+        	await ctx.send(f"{ctx.author.mention} Who said you could ask me out. I don't date ugly people like you!! GO AWAY!!")
+    	else:
+    		await ctx.send(f"{ctx.author.mention} Sure! I'd love to go out with you. I am free tomorrow from 11am to 6pm.")
 
     @commands.command()
     @commands.cooldown(rate=1, per=0.3, type=commands.BucketType.user)
