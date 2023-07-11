@@ -9,6 +9,7 @@ import typing
 import datetime
 import asyncio
 import os
+import aiofile
 
 
 class Party:
@@ -33,7 +34,7 @@ class Party:
             color=discord.colour.Colour.dark_gold(),
         )
         embed.set_footer(text='KODS Bot by Arcane#0033')
-        embed.set_thumbnail(url=self.leader.avatar_url)
+        embed.set_thumbnail(url=self.leader.avatar.url)
         member_list = ' '
         if len(self.members) > 0:
             for member in self.members:
@@ -54,7 +55,7 @@ class Party:
             color=discord.colour.Colour.dark_gold(),
         )
         embed.set_footer(text='KODS Bot by Arcane#0033')
-        embed.set_thumbnail(url=self.leader.avatar_url)
+        embed.set_thumbnail(url=self.leader.avatar.url)
         return embed
 
     async def set_info(self):
@@ -126,19 +127,18 @@ class PartyCog(commands.Cog):
             id_dict = party.get_id_dict()
             data[key] = id_dict
         cur_dir = os.curdir
-        os.chdir(f'{settings.BOT_DIR}/cogs/data')
-        os.remove('parties.json')
-        with open("parties.json", "w+") as f:
-            f.write(' ')
-            json.dump(data, f, indent=2)
+        with open(f'{settings.BOT_DIR}/cogs/data/parties.json', "w+") as f:
+            data = json.dumps(data, indent=2)
+            f.write(data)
         os.chdir(cur_dir)
 
     async def load_parties(self):
         guild = self.client.get_guild(settings.GUILD_ID)
         cur_dir = os.getcwd()
-        os.chdir(f'{settings.BOT_DIR}/cogs/data')
-        with open("parties.json", "r+") as f:
-            o_data = json.load(f)
+        print(f"{os.path.exists(f'{settings.BOT_DIR}/cogs/data/parties.json')}")
+        with open(f'{settings.BOT_DIR}/cogs/data/parties.json', "r+") as f:
+            file_data = f.read()
+            o_data = json.loads(file_data)
             for key in o_data:
                 data = o_data[key]
                 name = data['name']

@@ -1,4 +1,4 @@
 discord.py[voice]
-aiofiles
+aiofile
 pillow
 aiomysql

@@ -107,14 +107,14 @@ class Shop(commands.Cog):
                             description=f'{order_desc}',
                             timestamp=datetime.now().astimezone()
                         )
-                        order_embed.set_thumbnail(url=ctx.author.avatar_url)
+                        order_embed.set_thumbnail(url=ctx.author.avatar.url)
                         order_embed.set_footer(text='Ordered At: ')
                         await ctx.send(f'{ctx.author.mention} You order had been placed.', embed=order_embed)
                         order_receive_embed = discord.Embed(
                             title='New Order',
                             timestamp=datetime.now().astimezone()
                         )
-                        order_receive_embed.set_thumbnail(url=ctx.author.avatar_url)
+                        order_receive_embed.set_thumbnail(url=ctx.author.avatar.url)
                         order_receive_embed.add_field(name='Order No', value=f'{order_no}')
                         order_receive_embed.add_field(name='Item Code', value=f'{item[0]}')
                         order_receive_embed.add_field(name='Item Name', value=f'{item[1]}')
@@ -185,7 +185,7 @@ class Shop(commands.Cog):
             timestamp=order_info[1],
             color=discord.colour.Colour.red()
         )
-        order_embed.set_thumbnail(url=ctx.author.avatar_url)
+        order_embed.set_thumbnail(url=ctx.author.avatar.url)
         order_embed.set_footer(text='Ordered At: ')
         order_embed.add_field(name=f'Order No', value=f'{order_number}')
         order_embed.add_field(name=f'Item Code', value=f'{order_info[0]}')

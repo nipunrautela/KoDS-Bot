@@ -24,9 +24,9 @@ async def update(*query):
 
 async def retrieve(query: str, size: int = 1):
     loop = asyncio.get_event_loop()
-    conn = await aiomysql.connect(host='localhost', port=3308,
-                                  user='root', password='nipun1209',
-                                  db='kods', loop=loop)
+    conn = await aiomysql.connect(host=settings.DB_HOST, port=settings.DB_PORT,
+                                  user=settings.DB_USER, password=settings.DB_PASS,
+                                  db=settings.DB_NAME, loop=loop)
 
     async with conn.cursor() as cur:
         await cur.execute(query)    
@@ -42,9 +42,9 @@ async def retrieve(query: str, size: int = 1):
 
 async def row_count(query: str):
     loop = asyncio.get_event_loop()
-    conn = await aiomysql.connect(host='localhost', port=3308,
-                                  user='root', password='nipun1209',
-                                  db='kods', loop=loop)
+    conn = await aiomysql.connect(host=settings.DB_HOST, port=settings.DB_PORT,
+                                  user=settings.DB_USER, password=settings.DB_PASS,
+                                  db=settings.DB_NAME, loop=loop)
 
     async with conn.cursor() as cur:
         await cur.execute(query)

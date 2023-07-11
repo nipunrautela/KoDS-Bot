@@ -66,9 +66,9 @@ Can't wait to see you in game!'''
             color=discord.colour.Colour.green(),
             timestamp=datetime.datetime.utcnow()
         )
-        announce_embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
+        announce_embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar.url)
         announce_embed.set_thumbnail(url=ctx.guild.icon_url)
-        announce_embed.set_footer(text='KODS Bot by Arcane#0033', icon_url=self.client.user.avatar_url)
+        announce_embed.set_footer(text='KODS Bot by Arcane#0033', icon_url=self.client.user.avatar.url)
         guild = ctx.guild
         members = guild.fetch_members()
         announce_role = ctx.guild.get_role(roles.NO_ANNOUNCEMENT_ROLE)

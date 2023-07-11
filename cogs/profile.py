@@ -96,7 +96,7 @@ class Profile(commands.Cog):
         cur_dir = os.getcwd()
         os.chdir(f'{settings.BOT_DIR}/cogs/assets/profile/image_cache')
         async with ctx.channel.typing():
-            avatar_asset = target.avatar_url_as(format='png')
+            avatar_asset = target.avatar
             await avatar_asset.save(f'{target.id}_avatar.jpg')
             os.chdir(cur_dir)
             avatar = f'{target.id}_avatar.jpg'
@@ -199,7 +199,7 @@ class Profile(commands.Cog):
             timestamp=datetime.datetime.now()
         )
         leaderboard_embed.set_footer(text=f'At')
-        leaderboard_embed.set_thumbnail(url=ctx.guild.icon_url)
+        leaderboard_embed.set_thumbnail(url=ctx.guild.icon.url)
         if 'rank' in order_by:
             top_query = f'SELECT nickname, plr_rank FROM members ORDER BY plr_rank DESC, nickname LIMIT 10'
             top = await db.retrieve(top_query, size=0)
@@ -375,7 +375,7 @@ class Profile(commands.Cog):
             description=desc,
             color=discord.colour.Colour.green()
         )
-        embed.set_thumbnail(url=ctx.author.avatar_url)
+        embed.set_thumbnail(url=ctx.author.avatar.url)
         embed.add_field(name="**Reason**", value=reason_text)
 
         request_redirect = ctx.guild.get_channel(settings.RANK_REQUEST_REDIRECT)

@@ -73,7 +73,7 @@ class Paginator:
             color=discord.colour.Colour.orange(),
             timestamp=datetime.now().astimezone()
         )
-        shop_embed.set_thumbnail(url=self.ctx.guild.icon_url)
+        shop_embed.set_thumbnail(url=self.ctx.guild.icon.url)
         shop_embed.set_footer(text=f'Page {self.cur_page+1}/{len(self.pages)} |')
         if data is None:
             i = 0
@@ -97,7 +97,7 @@ class Paginator:
             description=f'Nothing to See here!',
             color=discord.colour.Colour.dark_blue(),
         )
-        empty_embed.set_thumbnail(url=self.ctx.guild.icon_url)
+        empty_embed.set_thumbnail(url=self.ctx.guild.icon.url)
         return empty_embed
 
     async def paginate_shop(self):

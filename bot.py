@@ -4,10 +4,6 @@ import discord
 from discord.ext import commands
 import settings
 
-intents = discord.Intents.all()
-intents.message_content = True
-client = commands.Bot(command_prefix=['k.', 'K.', 'alexa '], case_insensitive=True, intents=intents,
-                      help_command=commands.DefaultHelpCommand())
 
 initial_cogs = [
     'cogs.owner',
@@ -21,10 +17,21 @@ initial_cogs = [
 ]
 
 
-@client.event
-async def on_ready():
-    print(f'\nLogged in as: {client.user.name} - {client.user.id}\nVersion: {discord.__version__}\n')
+class KodsBot(commands.Bot):
+    async def setup_hook(self):
+        print(f'\nLogged in as: {self.user.name} - {self.user.id}\nVersion: {discord.__version__}\n')
+        for cog in initial_cogs:
+            try:
+                await self.load_extension(cog)
+                print(f'Cog: {cog} Loaded!')
+            except Exception as e:
+                print(f'Error: \nType: {type(e).__name__} \nInfo - {e}')
 
+
+intents = discord.Intents.all()
+intents.message_content = True
+client = KodsBot(command_prefix=['k.', 'K.', 'alexa '], case_insensitive=True, intents=intents,
+                 help_command=commands.DefaultHelpCommand())
 
 # @client.check
 # async def bot_check(ctx):
@@ -35,15 +42,4 @@ async def on_ready():
 #         await ctx.send(f'{ctx.author.mention} Bot commands cant be used in this channel!')
 #     return check1 and check2 and check3
 
-
-async def main():
-    async with client:
-        for cog in initial_cogs:
-            try:
-                await client.load_extension(cog)
-                print(f'Cog: {cog} Loaded!')
-            except Exception as e:
-                print(f'Error: \nType: {type(e).__name__} \nInfo - {e}')
-        await client.start(settings.TOKEN)
-
-asyncio.run(main())
+client.run(settings.TOKEN)
