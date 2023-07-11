@@ -4,10 +4,10 @@
 /Testing
 /Lib
 /Scripts
-pyvenv.cfg
-start.bat
-./settings.py
 /cogs/assets
 /cogs/data
 /cogs/cog archives
 /cogs/assets/profile/wz_profile_images
+pyvenv.cfg
+start.bat
+settings.py
