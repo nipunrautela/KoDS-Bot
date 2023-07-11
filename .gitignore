@@ -6,7 +6,7 @@
 /Scripts
 pyvenv.cfg
 start.bat
-settings.py
+./settings.py
 /cogs/assets
 /cogs/data
 /cogs/cog archives
