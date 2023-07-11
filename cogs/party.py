@@ -334,5 +334,5 @@ class PartyCog(commands.Cog):
         await msg.edit(content= f'BREH DONE!!')
 
 
-def setup(client):
-    client.add_cog(PartyCog(client))
+async def setup(client):
+    await client.add_cog(PartyCog(client))

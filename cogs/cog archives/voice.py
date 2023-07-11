@@ -162,5 +162,5 @@ class Voice(commands.Cog):
         await ctx.send('Player stopped.')
 
 
-def setup(client):
-    client.add_cog(Voice(client))
+async def setup(client):
+    await client.add_cog(Voice(client))

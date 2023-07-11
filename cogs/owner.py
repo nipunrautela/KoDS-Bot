@@ -36,5 +36,5 @@ class Owner(commands.Cog):
             await ctx.send(f'Cog: {cog} reloaded successfully!')
 
 
-def setup(client):
-    client.add_cog(Owner(client))
+async def setup(client):
+    await client.add_cog(Owner(client))

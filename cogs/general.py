@@ -265,5 +265,5 @@ Can't wait to see you in game!'''
             await ctx.channel.send(content=f'{target.mention}', embed=embed)
 
 
-def setup(client):
-    client.add_cog(General(client))
+async def setup(client):
+    await client.add_cog(General(client))

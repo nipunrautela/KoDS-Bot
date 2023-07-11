@@ -397,5 +397,5 @@ class Shop(commands.Cog):
             await ctx.send(multiple_items)
 
 
-def setup(client):
-    client.add_cog(Shop(client))
+async def setup(client):
+    await client.add_cog(Shop(client))

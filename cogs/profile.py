@@ -76,7 +76,7 @@ class Profile(commands.Cog):
         for member in guild.members:
             Profile.user_cd[member.id] = 1
 
-    @commands.command(case_insensitive=True)
+    @commands.command(name="profile", case_insensitive=True)
     async def profile(self, ctx, member: typing.Optional[discord.Member]):
         target = member or ctx.author
         if not (await db.is_registered(target)):
@@ -105,7 +105,7 @@ class Profile(commands.Cog):
             image_file = discord.File(f'{settings.BOT_DIR}/cogs/assets/profile/image_cache/{image_name}')
             await ctx.send(file=image_file)
 
-    @commands.command()
+    @commands.command(name="setbio")
     @commands.max_concurrency(1, commands.BucketType.user)
     async def setbio(self, ctx, *, bio: str = ' '):
         final_bio = bio
@@ -129,7 +129,7 @@ class Profile(commands.Cog):
         else:
             await ctx.send(f'{ctx.author.mention} There was some problem updating your bio.')
 
-    @commands.command()
+    @commands.command(name="give")
     @commands.max_concurrency(1, commands.BucketType.user)
     async def give(self, ctx, target: discord.Member = None, amount=None):
         def check(msg):
@@ -190,7 +190,7 @@ class Profile(commands.Cog):
         await ctx.send(f'{ctx.author.mention} {new_amount} credits have been given to ``{receiver.display_name}``\n'
                        f'Your balance is ``{result[0]-new_amount} credits``')
 
-    @commands.command()
+    @commands.command(name="leaderboard")
     async def leaderboard(self, ctx, *, order_by='rank'):
         leaderboard_embed = discord.Embed(
             title=f'Guild Leaderboard',
@@ -213,7 +213,7 @@ class Profile(commands.Cog):
                 leaderboard_embed.add_field(name=f'{member[0]}', value=f'Credits - {member[1]}', inline=False)
             await ctx.send(embed=leaderboard_embed)
 
-    @commands.command()
+    @commands.command(name="rep")
     @commands.max_concurrency(1, commands.BucketType.user)
     async def rep(self, ctx, member: discord.Member = None, *, reason=None):
         def check(msg):
@@ -262,7 +262,7 @@ class Profile(commands.Cog):
             await ctx.send(message)
             return
 
-    @commands.command()
+    @commands.command(name="negrep")
     @commands.max_concurrency(1, commands.BucketType.user)
     async def negrep(self, ctx, member: discord.Member = None, *, reason=None):
         def check(msg):
@@ -313,7 +313,7 @@ class Profile(commands.Cog):
             await ctx.send(message)
             return
 
-    @commands.command(aliases=['swzp'])
+    @commands.command(name="setworldzeroprofile", aliases=['swzp'])
     async def setworldzeroprofile(self, ctx):
         image_dir = f'{settings.BOT_DIR}/cogs/assets/profile/wz_profile_images'
         async with ctx.channel.typing():
@@ -335,7 +335,7 @@ class Profile(commands.Cog):
                 except IndexError:
                     await ctx.send(f'{ctx.author.mention} Command Failed. You did not upload an image.')
 
-    @commands.command(aliases=['gwzp'])
+    @commands.command(name="getworldzeroprofile", aliases=['gwzp'])
     async def getworldzeroprofile(self, ctx, member: discord.Member = None):
         image_dir = f'{settings.BOT_DIR}/cogs/assets/profile/wz_profile_images'
         async with ctx.channel.typing():
@@ -351,7 +351,7 @@ class Profile(commands.Cog):
                                f'using ``k.setworldzeroprofile``')
                 return
 
-    @commands.command(aliases=['requestpromote', 'rankrequest', 'requestrank'])
+    @commands.command(name="promoterequest", aliases=['requestpromote', 'rankrequest', 'requestrank'])
     async def promoterequest(self, ctx):
         if ctx.channel.id != settings.RANK_REQUEST_CHANNEL:
             await ctx.send(f'You can only request promotion in <#{settings.RANK_REQUEST_CHANNEL}>')
@@ -383,5 +383,5 @@ class Profile(commands.Cog):
         await ctx.send(f'{ctx.author.mention} Your request has been sent. The staff team will report back to you soon')
 
 
-def setup(client):
-    client.add_cog(Profile(client))
+async def setup(client):
+    await client.add_cog(Profile(client))
