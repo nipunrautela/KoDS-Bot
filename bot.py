@@ -2,9 +2,10 @@ import discord
 from discord.ext import commands
 import settings
 
-
+intents = discord.Intents.default()
+intents.message_content = True
 client = commands.Bot(command_prefix=['k.', 'K.', 'alexa '],
-                      case_insensitive=True,)
+                      case_insensitive=True, intents=intents)
 
 initial_cogs = [
     'cogs.owner',
@@ -19,7 +20,7 @@ initial_cogs = [
 
 for cog in initial_cogs:
     try:
-        client.load_extension(cog)
+        await client.load_extension(cog)
         print(f'Cog: {cog} Loaded!')
     except Exception as e:
         print(f'Error: \nType: {type(e).__name__} \nInfo - {e}')

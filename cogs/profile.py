@@ -325,7 +325,8 @@ class Profile(commands.Cog):
                 await ctx.send(f'{ctx.author.mention} Please upload the world zero screenshot')
                 try:
                     reply = await self.client.wait_for('message', check=lambda m: m.author == ctx.author, timeout=60)
-                    if (wz_screenshot := reply.attachments[0]) is not None:
+                    wz_screenshot = reply.attachments[0]
+                    if wz_screenshot is not None:
                         await wz_screenshot.save(f'{image_dir}/{ctx.author.id}_wz_profile.png')
                     await ctx.send(f'{ctx.author.mention} Successfully updated your world zero image in the database!')
                 except asyncio.TimeoutError:
