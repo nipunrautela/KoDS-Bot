@@ -93,12 +93,9 @@ class Profile(commands.Cog):
         else:
             self.name_count += 1
         rank = ctx.guild.get_role(roles.RANK_ORDER[rank_no])
-        cur_dir = os.getcwd()
-        os.chdir(f'{settings.BOT_DIR}/cogs/assets/profile/image_cache')
         async with ctx.channel.typing():
             avatar_asset = target.avatar
-            await avatar_asset.save(f'{target.id}_avatar.jpg')
-            os.chdir(cur_dir)
+            await avatar_asset.save(f'{settings.BOT_DIR}/cogs/assets/profile/image_cache/{target.id}_avatar.jpg')
             avatar = f'{target.id}_avatar.jpg'
             await self.client.loop.run_in_executor(None, image.create_profile, avatar,
                                                    name, rank.name, str(rep), str(credit), bio, image_name)

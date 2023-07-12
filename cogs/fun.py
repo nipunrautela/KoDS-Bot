@@ -18,7 +18,7 @@ class Fun(commands.Cog):
     @commands.command()
     async def coinflip(self, ctx):
         possibilities = [f'Heads', f'Tails']
-        await ctx.send(f'{ctx.author.mention} That is a {random.choice(possibilities)}')
+        await ctx.send(f'{ctx.author.mention} That is a **{random.choice(possibilities)}**')
 
     @commands.command()
     async def play(self, ctx, *, song):

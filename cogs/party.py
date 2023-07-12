@@ -135,7 +135,6 @@ class PartyCog(commands.Cog):
     async def load_parties(self):
         guild = self.client.get_guild(settings.GUILD_ID)
         cur_dir = os.getcwd()
-        print(f"{os.path.exists(f'{settings.BOT_DIR}/cogs/data/parties.json')}")
         with open(f'{settings.BOT_DIR}/cogs/data/parties.json', "r+") as f:
             file_data = f.read()
             o_data = json.loads(file_data)
@@ -150,7 +149,7 @@ class PartyCog(commands.Cog):
                 p_members = []
                 for member_id in data['member_ids']:
                     p_members.append(await guild.fetch_member(member_id))
-                c_at = datetime.datetime.strptime(data['created_at'], "%Y-%m-%d %H:%M:%S.%f")
+                c_at = datetime.datetime.strptime(data['created_at'], "%Y-%m-%d %H:%M:%S.%f%z")
                 info_msg = await infochannel.fetch_message(data['infomsg_id'])
                 self.parties[key] = Party(pname=name, leader=leader, category=category,
                                           infochannel=infochannel, chat=chat, vc=vc, created_at=c_at)
@@ -161,6 +160,7 @@ class PartyCog(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         await self.load_parties()
+        print("Cog Party: Parties Loaded")
 
     def in_party(self, member: discord.Member):
         # checks if the person is in a party
@@ -286,10 +286,12 @@ class PartyCog(commands.Cog):
 
     @party.command()
     @commands.is_owner()
-    async def members(self, ctx, leader: discord.Member):
+    async def members(self, ctx, leader: typing.Optional[discord.Member]):
+        if leader is None:
+            leader = ctx.author
         try:
             party = self.parties[f'{leader.id}'].members
-            await ctx.send(f'Party Members: {party}')
+            await ctx.send(f'Party Members: {list(map(lambda member: member.display_name, party))}')
         except KeyError:
             await ctx.send(f'{leader.display_name}\'s party doesn\'t exist, just like their waifu')
 

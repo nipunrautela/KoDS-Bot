@@ -49,7 +49,7 @@ class Paginator:
             color=discord.colour.Colour.purple(),
             timestamp=time
         )
-        basic_embed.set_thumbnail(url=self.ctx.guild.icon_url)
+        basic_embed.set_thumbnail(url=self.ctx.guild.icon.url)
         basic_embed.set_footer(text=f'Page {self.cur_page+1}/{len(self.pages)} |')
         if item is None:
             i = 0

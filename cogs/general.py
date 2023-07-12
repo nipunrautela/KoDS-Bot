@@ -28,7 +28,7 @@ Can't wait to see you in game!'''
             description=f'{desc}',
             timestamp=dt.utcnow()
         )
-        info_embed.set_thumbnail(url=ctx.guild.icon_url)
+        info_embed.set_thumbnail(url=ctx.guild.icon.url)
         info_embed.set_footer(text=f'Knights of the Dawned Sword')
 
         info_embed.add_field(name='Roblox Group',
@@ -67,7 +67,7 @@ Can't wait to see you in game!'''
             timestamp=datetime.datetime.utcnow()
         )
         announce_embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar.url)
-        announce_embed.set_thumbnail(url=ctx.guild.icon_url)
+        announce_embed.set_thumbnail(url=ctx.guild.icon.url)
         announce_embed.set_footer(text='KODS Bot by Arcane#0033', icon_url=self.client.user.avatar.url)
         guild = ctx.guild
         members = guild.fetch_members()
