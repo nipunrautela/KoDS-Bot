@@ -9,7 +9,6 @@
 /cogs/data
 /cogs/cog archives
 /cogs/assets/profile/wz_profile_images
-/cogs/assets/image_cache/*
 pyvenv.cfg
 start.bat
 settings.py
