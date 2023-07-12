@@ -9,6 +9,8 @@
 /cogs/data
 /cogs/cog archives
 /cogs/assets/profile/wz_profile_images
+/cogs/assets/image_cache/*
+!cogs/assets/image_cache/.gitkeep
 pyvenv.cfg
 start.bat
 settings.py
