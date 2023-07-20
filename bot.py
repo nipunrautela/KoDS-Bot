@@ -35,6 +35,7 @@ intents.message_content = True
 client = KodsBot(command_prefix=['k.', 'K.', 'alexa '], case_insensitive=True, intents=intents,
                  help_command=commands.DefaultHelpCommand())
 
+
 @client.check
 async def bot_check(ctx):
     check1 = not ctx.author.bot

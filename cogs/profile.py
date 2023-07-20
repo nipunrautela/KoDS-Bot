@@ -19,6 +19,8 @@ class Profile(commands.Cog):
         self.name_count = 0
         self.max_give_rep = 2  # max rep that can be given every day
         self.max_get_rep = 5  # max rep that can be received every day
+        if not os.path.isdir(f"{settings.BOT_DIR}/cogs/assets/profile/image_cache"):
+            os.mkdir(f"{settings.BOT_DIR}/cogs/assets/profile/image_cache")
 
     async def can_rep(self, repper, repped, date):
         repper_query = f'SELECT count(*) FROM reps WHERE repper={repper.id} and dor="{date}"'
@@ -102,11 +104,11 @@ class Profile(commands.Cog):
             image_file = discord.File(f'{settings.BOT_DIR}/cogs/assets/profile/image_cache/{image_name}')
             await ctx.send(file=image_file)
 
-    @commands.command(name="setbio")
+    @commands.command()
     @commands.max_concurrency(1, commands.BucketType.user)
     async def setbio(self, ctx, *, bio: str = ' '):
         final_bio = bio
-        if bio is None:
+        if bio == ' ':
             await ctx.send(f'Enter your bio: ')
 
             def check(msg):
@@ -122,7 +124,8 @@ class Profile(commands.Cog):
         query = f'UPDATE members SET bio="{fixed_bio}" WHERE id={ctx.author.id}'
         r = await db.update(query)
         if r == 0:
-            await ctx.send(f'{ctx.author.mention} Your bio has been change to:\n```{bio}``` ')
+            await ctx.send(f'{ctx.author.mention} Your bio has been change to:\n```{final_bio}``` ')
+            pass
         else:
             await ctx.send(f'{ctx.author.mention} There was some problem updating your bio.')
 
